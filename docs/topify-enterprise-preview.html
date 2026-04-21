@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Topify Enterprise Preview</title>
+  <style>
+    :root { --bg: #0d1323; --panel: #121b31; --card: #ffffff; --text: #0f172a; --muted: #64748b; --accent: #5b8cff; --accent2: #8ec5ff; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, sans-serif; background: linear-gradient(180deg, #0d1323 0%, #121b31 52%, #eff4ff 52%, #eff4ff 100%); color: var(--text); }
+    .wrap { max-width: 1160px; margin: 0 auto; padding: 28px 20px 72px; }
+    .hero { color: #fff; padding: 40px 0 72px; display: grid; gap: 24px; grid-template-columns: 1.1fr .9fr; align-items: center; }
+    .eyebrow { display: inline-block; padding: 8px 12px; border-radius: 999px; background: rgba(142,197,255,.12); border: 1px solid rgba(142,197,255,.22); color: var(--accent2); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    h1 { font-size: 56px; line-height: 1.05; margin: 16px 0; max-width: 12ch; }
+    .hero p { font-size: 19px; line-height: 1.6; color: #d8e1ff; max-width: 34em; }
+    .actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 28px; }
+    .btn { display: inline-block; padding: 14px 20px; border-radius: 12px; font-weight: 700; text-decoration: none; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-secondary { border: 1px solid rgba(255,255,255,.18); color: #fff; }
+    .panel { background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border: 1px solid rgba(255,255,255,.08); border-radius: 22px; padding: 22px; box-shadow: 0 20px 50px rgba(0,0,0,.25); }
+    .score { display: grid; gap: 14px; }
+    .pill { padding: 10px 12px; border-radius: 14px; background: rgba(255,255,255,.05); color: #ebf2ff; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+    .stat, .card { background: var(--card); border-radius: 18px; padding: 24px; box-shadow: 0 18px 40px rgba(16,24,40,.08); }
+    .stat strong { display: block; font-size: 36px; color: var(--accent); margin-bottom: 8px; }
+    h2 { font-size: 34px; margin: 0 0 12px; }
+    section { margin-top: 28px; }
+    .section-head { display: flex; justify-content: space-between; gap: 18px; align-items: end; margin-bottom: 20px; }
+    .section-head p { max-width: 42em; color: var(--muted); line-height: 1.6; }
+    .grid { display: grid; gap: 18px; }
+    .features { grid-template-columns: repeat(3, 1fr); }
+    .faq { grid-template-columns: repeat(2, 1fr); }
+    .tag { display: inline-block; margin-bottom: 10px; color: var(--accent); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+    .card h3 { margin: 0 0 10px; font-size: 22px; }
+    .card p, .card li { color: var(--muted); line-height: 1.6; font-size: 16px; }
+    .logos { display: flex; flex-wrap: wrap; gap: 10px; }
+    .logo { padding: 10px 14px; border-radius: 999px; background: #edf3ff; color: #24407f; font-weight: 700; font-size: 14px; }
+    .footer-cta { background: linear-gradient(135deg, #13203a, #224a9a); color: #fff; border-radius: 24px; padding: 34px; display: flex; justify-content: space-between; gap: 20px; align-items: center; }
+    .footer-cta p { color: #d9e4ff; max-width: 36em; }
+    @media (max-width: 920px) {
+      .hero, .features, .faq, .stats, .footer-cta { grid-template-columns: 1fr; display: grid; }
+      h1 { font-size: 42px; max-width: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Enterprise GEO for SaaS</span>
+        <h1>Own the AI Shortlist Before Buyers Reach Your Pipeline</h1>
+        <p>Give your marketing team a repeatable system to track, improve, and defend brand visibility across ChatGPT, Perplexity, Gemini, and Google AI Overviews.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://topify.ai/book-demo">Book an Enterprise Demo</a>
+          <a class="btn btn-secondary" href="https://topify.ai/get-report">Get Your AI Visibility Report</a>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="score">
+          <div class="pill"><strong>200+ brands trust Topify</strong><br>Move GEO from scattered checks to managed pipeline influence.</div>
+          <div class="pill"><strong>35% uplift in 2 days</strong><br>Public case-study signal from Topify's SaaS proof page.</div>
+          <div class="pill"><strong>81.76% Top-3 visibility</strong><br>Illustrates what sustained SEO + GEO execution can compound into.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="stat"><strong>4+</strong>AI engines tracked in one operating view.</div>
+      <div class="stat"><strong>300</strong>prompts/day on Pro before enterprise custom volume.</div>
+      <div class="stat"><strong>Unlimited</strong>AI replies, API access, and custom integrations for enterprise teams.</div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <span class="tag">Why it matters</span>
+          <h2>Traditional SEO data misses AI recommendation share</h2>
+        </div>
+        <p>When buyers ask AI tools to compare vendors, recommend platforms, or shortlist solutions, competitor brands can win mindshare before your site ever enters the journey.</p>
+      </div>
+      <div class="grid features">
+        <div class="card">
+          <span class="tag">Feature 1</span>
+          <h3>See Where AI Buyers Put You</h3>
+          <p><strong>Icon concept:</strong> Layered radar with four engine badges.</p>
+          <p>Track mentions, citation share, sentiment, and competitive position across the engines shaping modern SaaS discovery.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Feature 2</span>
+          <h3>Turn Prompt Chaos Into Pipeline Intelligence</h3>
+          <p><strong>Icon concept:</strong> Query map flowing into funnel stages.</p>
+          <p>Find the prompts that influence evaluation, align teams on what buyers actually ask, and prioritize the pages AI can compare and trust.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Feature 3</span>
+          <h3>Move From Insight to Execution Faster</h3>
+          <p><strong>Icon concept:</strong> Spark to workflow automation.</p>
+          <p>Approve recommendations, generate structured comparison-ready content, and connect the work to enterprise systems through APIs and custom integrations.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <span class="tag">Proof</span>
+          <h2>Built for teams that need more than a dashboard</h2>
+        </div>
+        <p>Topify already positions itself around multi-country coverage, unlimited seats, custom prompt volume, dedicated support, and workflow integration — exactly what larger SaaS organizations expect from enterprise software.</p>
+      </div>
+      <div class="card">
+        <div class="logos">
+          <span class="logo">Benpay</span>
+          <span class="logo">Fish Audio</span>
+          <span class="logo">GMI</span>
+          <span class="logo">Midea</span>
+          <span class="logo">Plaud</span>
+          <span class="logo">RayNeo</span>
+          <span class="logo">TCL</span>
+          <span class="logo">Winston Battery</span>
+          <span class="logo">Zoom</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <span class="tag">FAQ</span>
+          <h2>Questions an enterprise buyer will ask</h2>
+        </div>
+      </div>
+      <div class="grid faq">
+        <div class="card"><h3>How is this different from SEO software?</h3><p>SEO tools track rankings and clicks. Topify shows whether ChatGPT, Perplexity, Gemini, and AI Overviews actually mention and recommend your brand.</p></div>
+        <div class="card"><h3>Can we manage multiple business units?</h3><p>Yes. Enterprise expands on Pro with custom scale, governance, integrations, and support for organizations with multiple brands or regional teams.</p></div>
+        <div class="card"><h3>What does a VP Marketing actually get?</h3><p>A clearer view of AI visibility share, competitor positioning, prompt coverage, and the work required to increase inclusion in AI-generated shortlists.</p></div>
+        <div class="card"><h3>How quickly can results move?</h3><p>Topify's public SaaS case study reports a 35% uplift in two days, while sustained gains compound as teams keep optimizing prompt and content coverage.</p></div>
+        <div class="card"><h3>Will this replace our team or agency?</h3><p>No. It gives them a shared operating system for measurement, prioritization, and execution so GEO work becomes coordinated instead of reactive.</p></div>
+        <div class="card"><h3>Why choose Enterprise instead of self-serve?</h3><p>Enterprise adds custom prompt volume, unlimited AI replies, API access, custom integrations, an account manager, and SLA-backed support.</p></div>
+      </div>
+    </section>
+
+    <section class="footer-cta">
+      <div>
+        <span class="tag" style="color:#bcd3ff;">Closing CTA</span>
+        <h2 style="color:#fff;">Make AI Visibility a Managed Revenue Channel</h2>
+        <p>When AI buyers ask who belongs on the shortlist, your brand should show up with authority. Topify helps enterprise SaaS teams earn that placement consistently.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://topify.ai/book-demo">Book Your Enterprise Demo</a>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
