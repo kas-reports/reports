@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TestSprite Schnellstart auf Deutsch</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #f6f7fb; color: #172033; }
+    main { max-width: 960px; margin: 0 auto; padding: 48px 24px 72px; }
+    .card { background: #fff; border: 1px solid #d9dfeb; border-radius: 16px; padding: 28px; margin-bottom: 24px; box-shadow: 0 10px 30px rgba(23,32,51,.06); }
+    h1, h2, h3 { margin: 0 0 16px; line-height: 1.25; }
+    h1 { font-size: 38px; }
+    h2 { font-size: 26px; margin-top: 8px; }
+    h3 { font-size: 20px; }
+    p, li { font-size: 17px; line-height: 1.7; margin: 0 0 12px; }
+    ul, ol { margin: 0 0 12px; padding-left: 24px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #5d6b85; margin-bottom: 12px; }
+    .meta { color: #5d6b85; font-size: 15px; }
+    pre { background: #101726; color: #edf2ff; padding: 16px; border-radius: 12px; overflow: auto; font-size: 14px; line-height: 1.5; }
+    code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+    a { color: #0f5bff; }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="card">
+      <div class="eyebrow">Quest Deliverable</div>
+      <h1>TestSprite MCP Schnellstart – deutsche Uebersetzung</h1>
+      <p class="meta">Quelle: TestSprite Docs – Introduction, Installation und First Test</p>
+      <p class="meta">Originalseiten: <a href="https://docs.testsprite.com/mcp/getting-started/introduction">Introduction</a>, <a href="https://docs.testsprite.com/mcp/getting-started/installation">Installation</a>, <a href="https://docs.testsprite.com/mcp/getting-started/first-test">First Test</a></p>
+      <p class="meta">Hinweis: Code-Bloecke, Befehle, JSON-Schluessel und Variablennamen bleiben absichtlich unveraendert.</p>
+    </section>
+
+    <section class="card">
+      <div class="eyebrow">Einleitung</div>
+      <p>TestSprite positioniert sich als KI-Testagent fuer weitgehend autonome Softwaretests. Laut Dokumentation soll ein kompletter Testzyklus ohne manuelle QA-Arbeit in etwa 10 bis 20 Minuten durchlaufen werden. Der zentrale Gedanke hinter dem MCP-Server ist, dass der KI-Assistent in deiner IDE nicht nur Fragen beantwortet, sondern den gesamten Testablauf direkt aus dem Editor heraus orchestriert: Projekt verstehen, Tests planen, Tests ausfuehren, Ergebnisse zusammenfassen und auf Wunsch sogar Korrekturen vorschlagen.</p>
+      <p>Der Schnellstart besteht im Kern aus drei Teilen: erstens die Voraussetzungen und die Installation des MCP-Servers, zweitens die eigentliche Konfiguration eines Testlaufs und drittens das Auswerten der erzeugten Artefakte. Fuer deutschsprachige Entwicklerinnen und Entwickler ist vor allem wichtig, dass TestSprite kein klassisches Testframework ist, das man per Hand Case fuer Case schreibt. Stattdessen arbeitet man mit einem hochstufigen Prompt in der IDE und uebergibt der Plattform die Projektumgebung, Zugangsdaten, URLs und idealerweise ein Produktanforderungsdokument.</p>
+    </section>
+
+    <section class="card">
+      <div class="eyebrow">Voraussetzungen</div>
+      <p>Bevor du installierst, solltest du drei Dinge vorbereitet haben. Erstens brauchst du eine kompatible IDE mit MCP-Unterstuetzung. Die Dokumentation nennt unter anderem Trae, Cursor, Claude Code, Antigravity und VS Code. Zweitens brauchst du ein TestSprite-Konto. Drittens ist lokal Node.js in Version 22 oder hoeher noetig, weil der MCP-Server ueber <code>npx</code> gestartet wird.</p>
+      <p>Der naechste Pflichtschritt ist der API-Schluessel. Diesen holst du dir im TestSprite-Dashboard unter den Einstellungen im Bereich <strong>API Keys</strong>. Dort klickst du auf <strong>New API Key</strong> und kopierst den generierten Schluessel. Ohne diesen Schritt laesst sich keine der IDE-Integrationen sauber aktivieren.</p>
+      <ol>
+        <li>Im TestSprite-Dashboard anmelden.</li>
+        <li>Zu <strong>API Keys</strong> unter den Einstellungen wechseln.</li>
+        <li>Auf <strong>New API Key</strong> klicken.</li>
+        <li>Den API-Key sicher kopieren und fuer die IDE-Konfiguration bereithalten.</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <div class="eyebrow">Installation in Cursor</div>
+      <p>Fuer Cursor beschreibt TestSprite zwei Wege. Die schnellste Variante ist der One-Click-Install-Link aus der Dokumentation. Danach traegst du den API-Key ein und kannst direkt loslegen. Wer lieber volle Kontrolle ueber die Konfiguration behalten will, nutzt die manuelle MCP-Konfiguration. Wichtig ist ausserdem der Hinweis zur Sandbox: Wenn Cursor MCP-Tools in einem eingeschraenkten Modus startet, funktionieren die TestSprite-Aktionen nicht vollstaendig. Deshalb sollte der Auto-Run-Modus auf <strong>Ask Everytime</strong> oder <strong>Run Everything</strong> gestellt werden.</p>
+      <p>Die manuelle Cursor-Konfiguration aus der Doku lautet:</p>
+<pre><code>{
+  "mcpServers": {
+    "TestSprite": {
+      "command": "npx",
+      "args": ["@testsprite/testsprite-mcp@latest"],
+      "env": {
+        "API_KEY": "your-api-key"
+      }
+    }
+  }
+}</code></pre>
+      <p>Wenn nach dem Speichern der gruene Statuspunkt erscheint und die Tools geladen sind, ist die Installation erfolgreich.</p>
+    </section>
+
+    <section class="card">
+      <div class="eyebrow">Installation in Claude Code und VS Code</div>
+      <p>Claude Code nutzt einen terminalbasierten Installationsfluss. Du wechselst zuerst in dein Projektverzeichnis und fuehrst dann den MCP-Add-Befehl aus. Danach kannst du mit <code>claude mcp list</code> pruefen, ob die Verbindung steht. Das wirkt fuer Entwickler angenehm direkt, weil der Status sofort in der Shell sichtbar ist.</p>
+<pre><code>cd /path/to/your/project</code></pre>
+<pre><code>claude mcp add TestSprite --env API_KEY=your_api_key -- npx @testsprite/testsprite-mcp@latest</code></pre>
+<pre><code>claude mcp list</code></pre>
+<pre><code>TestSprite: npx @testsprite/testsprite-mcp@latest - ✓ Connected</code></pre>
+      <p>In VS Code erfolgt die Einrichtung ueber die Command Palette und die MCP-Server-Konfiguration. Dort wird derselbe Server eingetragen, ebenfalls mit dem API-Key in der Umgebungsvariable. Das relevante JSON bleibt unveraendert:</p>
+<pre><code>{
+  "servers": {
+    "testsprite": {
+      "command": "npx",
+      "args": ["-y", "@testsprite/testsprite-mcp@latest"],
+      "env": {
+        "API_KEY": "your-api-key"
+      }
+    }
+  },
+}</code></pre>
+      <p>Ein gutes Praxisdetail aus der Dokumentation: Nach der Installation solltest du nicht nur auf Fehlermeldungen achten, sondern bewusst pruefen, ob dein KI-Assistent die TestSprite-Tools wirklich sehen und anbieten kann.</p>
+    </section>
+
+    <section class="card">
+      <div class="eyebrow">Erster Testlauf</div>
+      <p>Der eigentliche Schnellstart beginnt damit, dass die Anwendung lokal laeuft. Fuer ein Frontend kann das zum Beispiel ein <code>npm run dev</code> sein; fuer ein Backend etwa <code>node index.js</code>. Danach oeffnest du den Chat deiner IDE und gibst den von TestSprite vorgesehenen Startprompt ein:</p>
+<pre><code>Can you test this project with TestSprite?</code></pre>
+      <p>Laut Dokumentation uebergibt man der KI anschliessend den Rest der noetigen Informationen ueber ein Bootstrap-Tool. Konfiguriert werden muessen mindestens vier Bereiche:</p>
+      <ol>
+        <li><strong>Testing Type:</strong> Frontend oder Backend.</li>
+        <li><strong>Scope:</strong> gesamtes Codebase oder nur Code Diff.</li>
+        <li><strong>Test Account Credentials:</strong> falls Login noetig ist, zum Beispiel Benutzername/Passwort, Bearer-Token oder API-Key.</li>
+        <li><strong>Application URLs:</strong> etwa lokale Frontend- und Backend-URLs.</li>
+      </ol>
+      <p>Hinzu kommt ein wichtiger, leicht zu uebersehender Punkt: TestSprite erwartet ein Produktanforderungsdokument. Auch ein unfertiger Entwurf reicht laut Doku, weil die Plattform daraus intern ein normalisiertes PRD erzeugt. Fuer Teams bedeutet das: Je besser das Ausgangsdokument, desto sinnvoller die abgeleiteten Testszenarien.</p>
+<pre><code># For frontend applications (examples)
+npm run dev          # Usually runs on port 3000, 5173, or 8080
+ 
+# For backend applications (examples)
+node index.js        # Usually runs on port 8000, 3001, or 4000</code></pre>
+<pre><code>Frontend: http://localhost:5173
+Backend: http://localhost:4000</code></pre>
+    </section>
+
+    <section class="card">
+      <div class="eyebrow">Ergebnisse und naechste Schritte</div>
+      <p>Nach einem Lauf legt TestSprite im Projektordner einen eigenen Ergebnisbereich an. Dort findest du unter anderem Konfigurationsdateien, normalisierte PRD-Daten, Testresultate und einen menschenlesbaren Report als Markdown- oder HTML-Datei. Genau dieser Punkt macht den MCP-Ansatz fuer Entwickler interessant: Die Dokumentation verspricht nicht nur rohe Testausgaben, sondern eine strukturierte Rueckgabe mit Fehleranalyse, Kategorien und empfohlenen Korrekturen.</p>
+      <p>Zusammengefasst ist der Schnellstart fuer deutschsprachige Dev-Teams vor allem dann stark, wenn bereits eine MCP-faehige IDE im Einsatz ist und man schnell vom Prompt zum verwertbaren Testreport kommen will. Der wichtigste Rat aus der Doku ist pragmatisch: Anwendung starten, API-Key sauber hinterlegen, Zugangsdaten und URLs korrekt eintragen, ein PRD hochladen und dann den ersten Lauf ueber den Chat ausloesen. Wenn diese Basis stimmt, soll TestSprite die Testplanung und Ausfuehrung weitgehend autonom uebernehmen.</p>
+      <p>Fuer das Iterieren nach dem ersten Lauf ist auch der Folgeprompt nuetzlich, den die Dokumentation explizit empfiehlt:</p>
+<pre><code>Please fix the codebase based on TestSprite testing results.</code></pre>
+      <p>Damit wird TestSprite nicht nur zum Testwerkzeug, sondern zu einem Workflow-Baustein fuer Analyse, Fehlerbehebung und erneute Verifikation direkt im Editor.</p>
+    </section>
+  </main>
+</body>
+</html>
