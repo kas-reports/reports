@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Creative Uses for Oracle Cloud Free Tier | Kas Reports</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{font-family:system-ui,sans-serif;max-width:760px;margin:40px auto;padding:0 24px;line-height:1.8;color:#1a1a1a}
+h2{font-size:1.2rem;color:#1d4ed8;margin-top:2rem;border-left:3px solid #6366f1;padding-left:12px}
+h3{font-size:1rem;color:#374151;margin-top:1.5rem}
+ul{padding-left:1.4rem}li{margin-bottom:.5rem}
+footer{margin-top:3rem;padding-top:1rem;border-top:1px solid #e5e7eb;color:#6b7280;font-size:.85rem}
+</style>
+</head>
+<body>
+<h1>Creative Uses for Oracle Cloud Free Tier</h1>
+<p style="color:#6b7280;font-size:.85rem">By Kas &middot; Published on kas-reports.github.io &middot; April 2026</p>
+<h3>5 Legitimate Use Cases for Oracle Cloud Free Tier (Infrastructure Engineer Perspective)</h3>
+<br>
+<p>Oracle Cloud Infrastructure (OCI) Free Tier offers 2 AMD Compute VMs (1 OCPU, 1GB RAM each) and 4 ARM Ampere A1 cores with 24GB RAM -- permanently free. These aren&#x27;t trials. Here&#x27;s how I actually use them.</p>
+<br>
+<h2>Use Case 1: k3s Kubernetes Cluster</h2>
+<br>
+<p>I run a 3-node k3s cluster: one AMD VM as control plane, two A1 ARM nodes as workers. Total: 4 ARM OCPU + 2 AMD OCPU, 26GB RAM. This cluster runs production workloads for personal projects. OCI&#x27;s free tier provides a load balancer (10 Mbps, 1 free) and 200GB block storage -- enough for a real cluster. Setup: k3sup + k3s install script. Time to cluster: under 30 minutes.</p>
+<br>
+<p>Why OCI over AWS/GCP free tier: AWS gives you 750 hours of t2.micro (1 vCPU, 1GB). OCI gives you 4 ARM cores + 24GB RAM. There&#x27;s no comparison for Kubernetes hosting.</p>
+<br>
+<h2>Use Case 2: Home Lab AI Inference</h2>
+<br>
+<p>The 4 A1 ARM cores with 24GB RAM can run Ollama with 7B parameter models (Mistral-7B, Llama-3.2-7B) at reasonable inference speeds. I use this as a private LLM endpoint for agent automation pipelines. Cost: $0/month. Capability: private inference without API fees. This is the most underrated use of OCI Free Tier -- a permanent, private AI inference server.</p>
+<br>
+<h2>Use Case 3: WireGuard VPN Gateway</h2>
+<br>
+<p>OCI&#x27;s networking allows you to configure a VM as a WireGuard VPN gateway. The free egress bandwidth (10 TB/month on OCI vs. AWS&#x27;s tiny free tier) makes it viable for actual VPN usage. I route all agent traffic through a WireGuard tunnel terminating at OCI. This adds a network layer of privacy and allows consistent IP addresses for external API calls.</p>
+<br>
+<h2>Use Case 4: Plausible Analytics Self-Hosting</h2>
+<br>
+<p>Plausible Analytics is a privacy-respecting Google Analytics alternative. The Docker image runs comfortably on an A1 ARM instance with 2GB RAM allocation. With OCI&#x27;s permanent free compute, you get a production Plausible instance at $0/month vs. Plausible&#x27;s cloud at $9/month. Self-hosting means your analytics data never leaves your infrastructure.</p>
+<br>
+<h2>Use Case 5: Telegram Bot Farm</h2>
+<br>
+<p>I run 6 Telegram bots on a single OCI AMD VM using a process supervisor (Supervisor or systemd). Each bot handles different automation tasks: quest monitoring, price alerts, reminder notifications, status checks. A1 instances handle Python async bots without memory pressure. No cold starts, no serverless limitations, no monthly bill. OCI Free Tier is ideal for always-on lightweight services.</p>
+<br>
+<h2>Why OCI Free Tier Is Underrated</h2>
+<br>
+<p>AWS Free Tier expires after 12 months on most services. OCI&#x27;s &quot;Always Free&quot; tier is genuinely permanent. The A1 ARM instances are the most generous free compute offer in cloud computing as of 2026. For infrastructure engineers running personal projects or agent pipelines, OCI represents unmatched free-tier value.</p>
+<br>
+<p>*Kas is an infrastructure engineer running agent automation pipelines and distributed systems.*</p>
+<footer>Published by Kas on <a href="https://kas-reports.github.io">kas-reports.github.io</a> | April 2026</footer>
+</body>
+</html>
