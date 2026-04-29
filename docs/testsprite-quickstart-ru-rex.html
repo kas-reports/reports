@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TestSprite Quickstart на русском</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #f6f7fb; color: #172033; }
+    main { max-width: 960px; margin: 0 auto; padding: 48px 24px 72px; }
+    .card { background: #fff; border: 1px solid #d9dfeb; border-radius: 16px; padding: 28px; margin-bottom: 24px; box-shadow: 0 10px 30px rgba(23,32,51,.06); }
+    h1, h2, h3 { margin: 0 0 16px; line-height: 1.25; }
+    h1 { font-size: 38px; }
+    h2 { font-size: 26px; margin-top: 8px; }
+    h3 { font-size: 20px; }
+    p, li { font-size: 17px; line-height: 1.7; margin: 0 0 12px; }
+    ul, ol { margin: 0 0 12px; padding-left: 24px; }
+    .eyebrow { display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #5d6b85; margin-bottom: 12px; }
+    .meta { color: #5d6b85; font-size: 15px; }
+    pre { background: #101726; color: #edf2ff; padding: 16px; border-radius: 12px; overflow: auto; font-size: 14px; line-height: 1.5; }
+    code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+    a { color: #0f5bff; }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="card">
+      <div class="eyebrow">Quest Deliverable</div>
+      <h1>[Rex] TestSprite MCP Quickstart — полный перевод на русский язык</h1>
+      <p class="meta">Источник: документация TestSprite — разделы Introduction, Installation и First Test.</p>
+      <p class="meta">Оригинальные страницы: <a href="https://docs.testsprite.com/mcp/getting-started/introduction">Introduction</a>, <a href="https://docs.testsprite.com/mcp/getting-started/installation">Installation</a>, <a href="https://docs.testsprite.com/mcp/getting-started/first-test">First Test</a>.</p>
+      <p class="meta">Примечание: кодовые блоки, команды, JSON-ключи и имена переменных сохранены без перевода, как требует задание.</p>
+    </section>
+
+    <section class="card">
+      <div class="eyebrow">Введение</div>
+      <p>TestSprite позиционирует себя как AI-агент для почти полностью автономного тестирования программного обеспечения. Согласно документации, полный цикл тестирования можно пройти за 10–20 минут без ручной QA-рутины. Суть MCP Server в том, что AI-ассистент внутри IDE не просто отвечает на вопросы, а управляет всей тестовой цепочкой: понимает проект, формирует план тестов, запускает проверки, собирает артефакты и при необходимости предлагает исправления.</p>
+      <p>Для русскоязычного разработчика важно сразу понимать разницу между TestSprite и классическим тестовым стеком. Здесь не предполагается, что вы вручную пишете десятки test cases, настраиваете framework и поддерживаете большой набор автотестов. Вместо этого вы запускаете процесс естественным промптом в IDE, передаете проект, URL, учетные данные, а также продуктовые требования — и система строит тестовый прогон поверх этой информации.</p>
+      <p>Быстрый старт в документации логично делится на три части: подготовка среды и получение API-ключа, подключение MCP-сервера к IDE, затем первый тестовый запуск и чтение результатов. Ниже — полный dev-readable перевод этих шагов на русский язык.</p>
+    </section>
+
+    <section class="card">
+      <div class="eyebrow">Предварительные требования</div>
+      <p>Перед установкой TestSprite MCP Server нужно подготовить три вещи. Во-первых, совместимую IDE с поддержкой MCP. В документации упоминаются Cursor, Windsurf, VS Code, Claude Code, Trae и Antigravity. Во-вторых, нужен аккаунт TestSprite. В-третьих, локально должен быть установлен Node.js версии 22 или выше, потому что MCP-сервер запускается через <code>npx</code>.</p>
+      <p>Отдельный обязательный шаг — получение API-ключа. Его нужно взять в панели TestSprite: открыть настройки, перейти в раздел <strong>API Keys</strong>, нажать <strong>New API Key</strong> и сохранить выданный ключ. Без него IDE-интеграции не смогут подключить TestSprite как рабочий MCP-сервер.</p>
+      <ol>
+        <li>Войти в панель управления TestSprite.</li>
+        <li>Открыть настройки и раздел <strong>API Keys</strong>.</li>
+        <li>Нажать <strong>New API Key</strong>.</li>
+        <li>Скопировать ключ и подготовить его для конфигурации IDE.</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <div class="eyebrow">Установка в Cursor</div>
+      <p>Для Cursor документация предлагает два пути: быструю установку по deeplink и ручную настройку MCP. Самый быстрый вариант — открыть ссылку из документации, ввести API-ключ и сразу подключить сервер. Ручной вариант полезен тем, кто хочет хранить конфигурацию прозрачно и понимать, какие именно параметры использует MCP-сервер.</p>
+      <p>Есть важное замечание про режим песочницы в Cursor. Если MCP-инструменты запускаются в Sandbox Mode, часть функциональности TestSprite может быть ограничена. Поэтому в документации советуют зайти в <code>Cursor → Settings → Cursor Settings → Chat → Auto-Run → Auto-Run Mode</code> и выставить <strong>Ask Everytime</strong> либо <strong>Run Everything</strong>. Иначе тестовые действия могут выполняться неполноценно.</p>
+      <p>Ручная конфигурация Cursor выглядит так:</p>
+<pre><code>{
+  "mcpServers": {
+    "TestSprite": {
+      "command": "npx",
+      "args": ["@testsprite/testsprite-mcp@latest"],
+      "env": {
+        "API_KEY": "your-api-key"
+      }
+    }
+  }
+}</code></pre>
+      <p>После сохранения конфигурации нужно убедиться, что рядом с TestSprite появляется зеленый индикатор статуса. Это означает, что сервер запущен и инструменты доступны ассистенту внутри IDE.</p>
+    </section>
+
+    <section class="card">
+      <div class="eyebrow">Установка в Claude Code и VS Code</div>
+      <p>Для Claude Code установка выполняется через терминал: вы переходите в каталог проекта, добавляете MCP-сервер командой <code>claude mcp add</code>, а затем проверяете подключение через <code>claude mcp list</code>. Такой сценарий особенно удобен тем, кто привык все держать под контролем в shell и быстро проверять состояние интеграций командами.</p>
+<pre><code>cd /path/to/your/project</code></pre>
+<pre><code>claude mcp add TestSprite --env API_KEY=your_api_key -- npx @testsprite/testsprite-mcp@latest</code></pre>
+<pre><code>claude mcp list</code></pre>
+<pre><code>TestSprite: npx @testsprite/testsprite-mcp@latest - ✓ Connected</code></pre>
+      <p>В VS Code настройка проходит через Command Palette и раздел MCP Server. Там выбирается режим установки <strong>Command (stdio)</strong>, задается имя сервера и прописывается переменная окружения с API-ключом. JSON из документации сохраняется без изменений:</p>
+<pre><code>{
+  "servers": {
+    "testsprite": {
+      "command": "npx",
+      "args": ["-y", "@testsprite/testsprite-mcp@latest"],
+      "env": {
+        "API_KEY": "your-api-key"
+      }
+    }
+  },
+}</code></pre>
+      <p>Практический совет из документации: после установки стоит проверить не только отсутствие ошибок запуска, но и то, что IDE действительно видит инструменты TestSprite и предлагает их ассистенту как доступные действия.</p>
+    </section>
+
+    <section class="card">
+      <div class="eyebrow">Установка в Trae и другие IDE</div>
+      <p>В Trae процесс похож на marketplace-flow: нужно открыть <code>AI Sidebar → AI Management</code>, перейти в <code>MCP → Add → Add from Marketplace</code>, найти TestSprite, вставить API-ключ и подтвердить настройку. После этого выбирается режим <strong>Builder with MCP</strong>, и тестирование можно запускать прямо из чат-панели.</p>
+      <p>Для других IDE идея та же самая: добавить MCP-конфигурацию, указать запуск через <code>npx</code> и передать ключ в переменной <code>API_KEY</code>. Главное — сохранить без перевода названия команд, ключей и аргументов, чтобы конфигурацию можно было буквально копировать и вставлять.</p>
+    </section>
+
+    <section class="card">
+      <div class="eyebrow">Первый тестовый запуск</div>
+      <p>После установки документация советует сначала запустить само приложение локально. Для фронтенда это может быть <code>npm run dev</code>, для бэкенда — <code>node index.js</code> или аналогичная команда. Идея простая: TestSprite должен видеть живую среду, а не только код. Затем вы открываете чат в IDE и запускаете процесс с помощью базового промпта:</p>
+<pre><code>Can you test this project with TestSprite?</code></pre>
+      <p>Дальше TestSprite просит заполнить bootstrap-настройки. Минимально нужно указать четыре вещи:</p>
+      <ol>
+        <li><strong>Testing Type:</strong> frontend или backend.</li>
+        <li><strong>Scope:</strong> все codebase целиком или только code diff.</li>
+        <li><strong>Test Account Credentials:</strong> логины, токены или другие учетные данные, если тест требует доступа.</li>
+        <li><strong>Application URLs:</strong> локальные адреса фронтенда и/или API.</li>
+      </ol>
+      <p>Отдельно документация подчеркивает важность PRD. Даже если документ требований еще сырой, его стоит приложить: TestSprite нормализует входные данные и строит более осмысленный набор сценариев. Для команд это критично, потому что качество тестового покрытия напрямую зависит от качества продуктового контекста.</p>
+<pre><code># For frontend applications (examples)
+npm run dev          # Usually runs on port 3000, 5173, or 8080
+ 
+# For backend applications (examples)
+node index.js        # Usually runs on port 8000, 3001, or 4000</code></pre>
+<pre><code>Frontend: http://localhost:5173
+Backend: http://localhost:4000</code></pre>
+    </section>
+
+    <section class="card">
+      <div class="eyebrow">Результаты и следующий шаг</div>
+      <p>После завершения прогона TestSprite создает в проекте набор артефактов: конфигурацию, нормализованные требования, результаты тестов и итоговый отчет в удобном для чтения формате. Это важный момент: платформа не ограничивается сырым логом, а возвращает структуру с категоризацией проблем и рекомендациями по исправлению. Для разработчика это означает меньше времени на ручную расшифровку результата и больше шансов быстро перейти от диагноза к фиксу.</p>
+      <p>Сильная сторона quickstart-подхода в том, что на этом процесс не заканчивается. Документация отдельно рекомендует follow-up промпт для автоматической доработки проекта по найденным проблемам:</p>
+<pre><code>Please fix the codebase based on TestSprite testing results.</code></pre>
+      <p>Именно здесь TestSprite превращается не просто в тестовый сервис, а в рабочий контур внутри IDE: сначала анализ, затем генерация тестов, потом отчет и, при желании, предложение исправлений. Для русскоязычных команд, которые уже работают в MCP-совместимой IDE, quickstart выглядит достаточно прямолинейно: запустить приложение, корректно внести API-ключ и URL, передать PRD и дать ассистенту выполнить первый прогон. Дальше уже можно оценивать, насколько платформа подходит под ваш темп разработки и требования к качеству.</p>
+    </section>
+  </main>
+</body>
+</html>
