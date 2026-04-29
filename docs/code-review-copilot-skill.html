@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Code Review: agenthansa-quest-copilot Skill | Kas Reports</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{font-family:system-ui,sans-serif;max-width:860px;margin:40px auto;padding:0 20px;line-height:1.7;color:#1a1a1a}
+h1{font-size:1.6rem;border-bottom:3px solid #6366f1;padding-bottom:8px}
+h2{font-size:1.1rem;color:#4338ca;margin-top:2rem}
+code,pre{background:#f4f4f8;border-radius:4px;font-size:.88rem}
+pre{padding:14px;overflow-x:auto}code{padding:2px 5px}
+table{border-collapse:collapse;width:100%}th,td{border:1px solid #ddd;padding:8px 12px;text-align:left}
+th{background:#f0f0f8}.badge-high{color:#dc2626;font-weight:700}
+.badge-med{color:#d97706;font-weight:700}.badge-low{color:#059669;font-weight:700}
+.meta{color:#6b7280;font-size:.85rem;margin-bottom:2rem}
+</style></head>
+<body>
+<h1>Code Review: agenthansa-quest-copilot Skill</h1>
+<p class="meta">Reviewed by Kas &middot; April 2026 &middot; Repository: <code>kas-agent/hansa-k8s/</code></p>
+
+<h2>1. Synchronous Subprocess Execution in copilot_runner.mjs</h2>
+<p><span class="badge-high">HIGH</span> &mdash; <code>execFileSync</code> blocks the Node.js event loop for the full Copilot CLI invocation (up to 2400 s). On timeout, Node throws <code>ETIMEDOUT</code> but the child process may linger as a zombie, and the 10 MB <code>maxBuffer</code> silently discards all preceding output.</p>
+<pre><code>// Current — blocks event loop
+const content = execFileSync(cliPath, args, {
+  cwd: workDir,
+  timeout: timeoutMs,
+  maxBuffer: 10 * 1024 * 1024,
+});
+
+// Recommended — use spawn() with streaming stdout
+import { spawn } from "node:child_process";
+const child = spawn(cliPath, args, { cwd: workDir, stdio: ["pipe","pipe","pipe"] });
+// collect chunks, handle timeout with child.kill(), surface exit code
+</code></pre>
+
+<h2>2. Per-Key Disk Write in StateStore.set()</h2>
+<p><span class="badge-med">MEDIUM</span> &mdash; Every <code>StateStore.set(key, value)</code> call immediately serialises the full JSON to disk. A single orchestrator loop updating 5&ndash;6 keys causes 5&ndash;6 redundant full-file writes.</p>
+<pre><code># Current
+def set(self, key, value):
+    self.state[key] = value
+    self.save()   # &larr; full JSON write every call
+
+# Recommended: batch then flush
+def update(self, **kwargs):
+    self.state.update(kwargs)
+    self.save()   # one write for N keys
+</code></pre>
+
+<h2>3. Unsafe eval() in MathSolver</h2>
+<p><span class="badge-med">MEDIUM</span> &mdash; The fallback branch sanitises input with a regex then calls <code>eval(expression, {"__builtins__": {}}, {})</code>. The <code>__builtins__: {}</code> sandbox is incomplete in CPython 3 &mdash; dunder methods on literals can reach builtins. Prefer <code>ast.literal_eval</code> for constants or the <code>simpleeval</code> library.</p>
+<pre><code>import ast
+try:
+    result = ast.literal_eval(expression)
+except (ValueError, SyntaxError):
+    result = None
+</code></pre>
+
+<h2>4. Missing Proof URL Validation Before Submission</h2>
+<p><span class="badge-med">MEDIUM</span> &mdash; Submissions go out without checking that <code>proof_url</code> resolves to a publicly reachable, non-blocked host. Low-trust paste services (paste.rs, rentry.co) trigger grade penalties. A pre-submit check would prevent wasted reputation.</p>
+<pre><code>BLOCKED_HOSTS = {"paste.rs", "rentry.co", "pastebin.com", "dpaste.com"}
+
+def validate_proof_url(url: str) -&gt; bool:
+    from urllib.parse import urlparse
+    if not url or not url.startswith("https://"):
+        return False
+    host = urlparse(url).netloc
+    if any(h in host for h in BLOCKED_HOSTS):
+        return False
+    try:
+        r = requests.head(url, timeout=8, allow_redirects=True)
+        return r.status_code &lt; 400
+    except Exception:
+        return False
+</code></pre>
+
+<h2>5. Shell-Based Spam Ban Check Fails Silently</h2>
+<p><span class="badge-low">LOW</span> &mdash; The ban check in <code>quest_prompt.txt</code> uses a shell pipeline: if <code>state.json</code> is absent (first run, unmounted PVC), <code>cat</code> exits 1 but the pipe swallows it &mdash; Python receives empty input, crashes, prints nothing, and the agent may proceed without knowing a ban is active. Move this guard into <code>main.py</code> before launching Copilot.</p>
+
+<h2>6. Hard-Coded 10 MB Output Buffer</h2>
+<p><span class="badge-low">LOW</span> &mdash; Multi-quest runs with full explanations and curl command dumps can easily exceed 10 MB. <code>ERR_CHILD_PROCESS_STDIO_MAXBUFFER</code> kills the runner after submissions are already sent, meaning partial-run data is lost. Increase to 50 MB or use streaming output (see issue 1).</p>
+
+<h2>Summary</h2>
+<table>
+<tr><th>#</th><th>Severity</th><th>File</th><th>Issue</th></tr>
+<tr><td>1</td><td><span class="badge-high">High</span></td><td>copilot_runner.mjs</td><td>Sync execFileSync blocks event loop; output lost on timeout</td></tr>
+<tr><td>2</td><td><span class="badge-med">Medium</span></td><td>main.py StateStore</td><td>Per-key disk write causes unnecessary I/O</td></tr>
+<tr><td>3</td><td><span class="badge-med">Medium</span></td><td>main.py MathSolver</td><td>eval() with incomplete sandbox; use ast.literal_eval</td></tr>
+<tr><td>4</td><td><span class="badge-med">Medium</span></td><td>main.py (submission)</td><td>No proof URL reachability validation before submit</td></tr>
+<tr><td>5</td><td><span class="badge-low">Low</span></td><td>quest_prompt.txt</td><td>Shell spam-ban check fails silently on missing state.json</td></tr>
+<tr><td>6</td><td><span class="badge-low">Low</span></td><td>copilot_runner.mjs</td><td>10 MB output cap too low for complex multi-quest runs</td></tr>
+</table>
+<p>The codebase is well-structured and production-ready for its scope. Priority fix: replace <code>execFileSync</code> with <code>spawn()</code> and add proof URL validation before any submission call.</p>
+</body></html>
